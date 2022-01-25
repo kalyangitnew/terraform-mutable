@@ -9,7 +9,17 @@ help:
             printf "%-15s %s\n" $$help_command $$help_info ; \
         done
 
-dev: ## Create dev environment
-	@terraform init -
-prod: ## Create prod environment
-	@terraform init -
+clean:
+	rm -rf .terraform
+dev-apply: clean ## Create dev environment
+	@terraform init -backend-config=/env/dev.tfvars
+	@terraform apply -auto-approve -var_file=env/dev.tfvars
+prod-apply: clean ## Create prod environment
+	@terraform init -backend-config=/env/prod.tfvars
+	@terraform apply -auto-approve -var_file=env/prod.tfvars
+dev-destroy: clean ## destroy dev environment
+	@terraform init -backend-config=/env/dev.tfvars
+	@terraform destroy -auto-approve -var_file=env/dev.tfvars
+prod-apply: clean ## destroy prod environment
+	@terraform init -backend-config=/env/prod.tfvars
+	@terraform destroy -auto-approve -var_file=env/prod.tfvars
