@@ -17,7 +17,7 @@ resource "aws_subnet" "public-subnets" {
   availability_zone = element(var.AZS,count.index )
 
   tags = {
-    Name = "pUublic-subnet-${count.index}"
+    Name = "public-subnet-${count.index}"
   }
 }
 resource "aws_route_table_association" "priv-assoc" {
