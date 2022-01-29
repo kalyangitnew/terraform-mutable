@@ -13,7 +13,7 @@ resource "aws_db_parameter_group" "pg" {
   name   = "mysql-${var.ENV}-pg"
   family = "mysql5.7"
 }
-resource "aws_db_subnet_group" "default" {
+resource "aws_db_subnet_group" "subnet_group" {
   name       = "mysqldb-subnet-group-${var.ENV}"
   subnet_ids = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS
 
@@ -21,6 +21,4 @@ resource "aws_db_subnet_group" "default" {
     Name = "mysqldb-subnet-group-${var.ENV}"
   }
 }
-output "PRIVATE_SUBNETS_" {
-  value = "data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS"
-}
+
