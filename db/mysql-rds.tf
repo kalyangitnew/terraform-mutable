@@ -9,8 +9,8 @@ resource "aws_db_instance" "mysql" {
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
   name                 = "dummy"
-  username             = locals_rds_user
-  password             = locals_rds_pass
+  username             = locals.rds_user
+  password             = locals.rds_pass
   parameter_group_name = aws_db_parameter_group.pg.name
   skip_final_snapshot  = true
 }
