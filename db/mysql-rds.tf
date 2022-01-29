@@ -1,11 +1,16 @@
+locals {
+  rds_user = jsondecode(data.aws_secretsmanager_secret_version.secrets-version.secret_string)["RDS_MYSQL_USER"]
+  rds_pass = jsondecode(data.aws_secretsmanager_secret_version.secrets-version.secret_string)["RDS_MYSQL_PASS"]
+}
 resource "aws_db_instance" "mysql" {
   allocated_storage    = 10
+  identifier             = "mysql-${var.ENV}"
   engine               = "mysql"
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
   name                 = "dummy"
-  username             = "admin"
-  password             = "admin123"
+  username             = locals_rds_user
+  password             = locals_rds_pass
   parameter_group_name = aws_db_parameter_group.pg.name
   skip_final_snapshot  = true
 }
