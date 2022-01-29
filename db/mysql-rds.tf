@@ -21,3 +21,6 @@ resource "aws_db_subnet_group" "default" {
     Name = "mysqldb-subnet-group-${var.ENV}"
   }
 }
+output "PRIVATE_SUBNETS_" {
+  value = "data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS"
+}
