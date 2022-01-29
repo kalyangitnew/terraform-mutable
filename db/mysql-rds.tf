@@ -14,6 +14,13 @@ resource "aws_db_instance" "mysql" {
   parameter_group_name = aws_db_parameter_group.pg.name
   skip_final_snapshot  = true
 }
+resource "aws_db_security_group" "mysql" {
+  name = "mysql-${var.ENV}"
+
+  ingress {
+    cidr = data.terraform_remote_state.VPC_ID
+  }
+}
 resource "aws_db_parameter_group" "pg" {
   name   = "mysql-${var.ENV}-pg"
   family = "mysql5.7"
@@ -40,7 +47,7 @@ sudo yum install mariadb -y
 curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip"
 cd /tmp
 unzip -o /tmp/mysql.zip
-mysql -h${aws_db_instance.mysql.address} -u${local.rds_user} -p${local.rds_pass}
+mysql -h${aws_db_instance.mysql.address} -u${local.rds_user} -p${local.rds_pass} <mysql-main/shipping.sql
 EOF
   }
 }
