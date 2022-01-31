@@ -79,8 +79,5 @@ resource "null_resource" "mongodb-setup" {
       user     = local.ssh_user
       password = local.ssh_pass
     }
-    inline = [
-      "ansible-pull -U https://github.com/kalyangitnew/ansible.git roboshop-pull.yml -e ENV=${var.ENV} -e COMPONENT=mongodb -e APP_VERSION="
-    ]
   }
 }
