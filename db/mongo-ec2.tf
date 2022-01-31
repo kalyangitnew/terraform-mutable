@@ -1,7 +1,4 @@
-locals {
-  rds_user = jsondecode(data.aws_secretsmanager_secret_version.secrets-version.secret_string)["RDS_MYSQL_USER"]
-  rds_pass = jsondecode(data.aws_secretsmanager_secret_version.secrets-version.secret_string)["RDS_MYSQL_PASS"]
-}
+
 resource "aws_rds_cluster" "docdb" {
   cluster_identifier      = "mongodv-${var.ENV}"
   engine                  = "docdb"
