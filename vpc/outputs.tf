@@ -31,6 +31,4 @@ output "INTERNAL_HOSTEDZONE_ID" {
 output "ALL_VPC_CIDR" {
   value = local.ALL_VPC_CIDR
 }
-output "PUBLIC_HOSTEDZONE_ID" {
-  value = var.PUBLIC_HOSTEDZONE_ID
-}
+
