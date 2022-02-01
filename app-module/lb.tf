@@ -57,7 +57,7 @@ resource "aws_lb_listener" "private_listener" {
   port              = "80"
   protocol          = "HTTP"
   default_action {
-    target_group_arn = aws_lb_target_group.example.id
+    target_group_arn = aws_lb_target_group.tg.arn
     type             = "forward"
   }
 }
