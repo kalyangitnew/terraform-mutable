@@ -1,11 +1,25 @@
 pipeline {
   agent { label 'WORKSTATION'}
+  environment {
+    ENV = "dev"
+    ACTION = "apply"
+    SSH = credentials('CENTOS_SSH')
+  }
+  parameters {
+      choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Choose Environment')
+      string(name: 'ACTION', defaultValue: 'apply', description: 'Give an action to do on terraform')
+  }
+  options {
+      ansiColor('xterm')
+      disableConcurrentBuilds()
+  }
   stages {
     stage ('vpc') {
         steps {
+            sh 'echo ${SSH} >/tmp/out'
             sh '''
                 cd vpc
-                make dev-apply
+                make ${ENV}-${ACTION}
             '''
         }
     }
@@ -13,7 +27,7 @@ pipeline {
         steps {
             sh '''
                 cd db
-                make dev-apply
+                make ${ENV}-${ACTION}
             '''
         }
     }
@@ -21,7 +35,7 @@ pipeline {
         steps {
             sh '''
                 cd alb
-                make dev-apply
+                make ${ENV}-${ACTION}
             '''
         }
     }
